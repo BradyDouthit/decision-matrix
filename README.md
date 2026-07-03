@@ -41,6 +41,7 @@ http://raspberrypi.local:3000
    git pull
    npm install   # only needed if package.json changed
    sudo systemctl restart decision-matrix
+   sudo systemctl status decision-matrix   # confirm it actually came back up
    ```
 
 `data.json` is gitignored, so `git pull` never touches your saved items.

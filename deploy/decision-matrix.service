@@ -1,0 +1,14 @@
+[Unit]
+Description=Decision Matrix
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/node server.js
+WorkingDirectory=/home/<username>/decision-matrix
+Restart=always
+User=<username>
+Environment=PORT=3000
+Environment=HOST=0.0.0.0
+
+[Install]
+WantedBy=multi-user.target

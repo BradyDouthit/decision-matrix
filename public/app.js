@@ -1,4 +1,6 @@
 const dotsLayer = document.getElementById('dots');
+const buyNextList = document.getElementById('buy-next-list');
+const buyNextEmpty = document.getElementById('buy-next-empty');
 const itemList = document.getElementById('item-list');
 const modalOverlay = document.getElementById('modal-overlay');
 const modalTitle = document.getElementById('modal-title');
@@ -20,19 +22,64 @@ function scoreToPercent(score) {
   return 5 + (score / 10) * 90;
 }
 
+function renderBuyNext() {
+  buyNextList.innerHTML = '';
+
+  const topThree = [...items]
+    .sort((a, b) => (b.usefulness + b.cost) - (a.usefulness + a.cost))
+    .slice(0, 3);
+
+  buyNextEmpty.classList.toggle('hidden', topThree.length > 0);
+
+  topThree.forEach((item, index) => {
+    const row = document.createElement('li');
+    row.className = 'buy-next-row';
+    row.addEventListener('click', () => openEditModal(item));
+
+    const rank = document.createElement('span');
+    rank.className = 'buy-next-rank';
+    rank.textContent = String(index + 1);
+
+    const name = document.createElement('span');
+    name.className = 'buy-next-name';
+    name.textContent = item.name;
+
+    const scores = document.createElement('span');
+    scores.className = 'buy-next-scores';
+    scores.textContent = `useful ${item.usefulness} · cheap ${item.cost}`;
+
+    row.appendChild(rank);
+    row.appendChild(name);
+    row.appendChild(scores);
+    buyNextList.appendChild(row);
+  });
+}
+
 function render() {
   dotsLayer.innerHTML = '';
   itemList.innerHTML = '';
+  renderBuyNext();
 
   for (const item of items) {
+    const left = scoreToPercent(item.usefulness);
+    const bottom = scoreToPercent(item.cost);
+
     const dot = document.createElement('button');
     dot.className = 'dot';
-    dot.style.left = `${scoreToPercent(item.usefulness)}%`;
-    dot.style.bottom = `${scoreToPercent(item.cost)}%`;
+    dot.style.left = `${left}%`;
+    dot.style.bottom = `${bottom}%`;
     dot.title = item.name;
     dot.setAttribute('aria-label', item.name);
     dot.addEventListener('click', () => openEditModal(item));
     dotsLayer.appendChild(dot);
+
+    const label = document.createElement('span');
+    label.className = 'dot-label';
+    if (left > 65) label.classList.add('dot-label--flip');
+    label.style.left = `${left}%`;
+    label.style.bottom = `${bottom}%`;
+    label.textContent = item.name;
+    dotsLayer.appendChild(label);
 
     const row = document.createElement('li');
     row.className = 'item-row';

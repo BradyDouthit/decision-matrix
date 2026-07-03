@@ -95,7 +95,7 @@ main {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .quadrant-quad {
@@ -179,8 +179,7 @@ main {
   position: absolute;
   width: 16px;
   height: 16px;
-  margin-left: -8px;
-  margin-top: -8px;
+  transform: translate(-50%, 50%);
   border-radius: 50%;
   background: var(--accent);
   border: 2px solid var(--surface);
@@ -190,12 +189,108 @@ main {
 }
 
 .dot:active {
-  transform: scale(1.15);
+  transform: translate(-50%, 50%) scale(1.15);
+}
+
+.dot-label {
+  position: absolute;
+  font-size: 0.65rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  max-width: 90px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  color: var(--text);
+  background: color-mix(in srgb, var(--surface) 85%, transparent);
+  padding: 1px 5px;
+  border-radius: 4px;
+  transform: translate(10px, 50%);
+}
+
+.dot-label--flip {
+  transform: translate(calc(-100% - 10px), 50%);
+}
+
+.buy-next {
+  margin-top: 1.5rem;
+}
+
+.buy-next h2 {
+  margin: 0 0 0.6rem;
+  font-size: 1rem;
+}
+
+.buy-next-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.buy-next-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--surface);
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  padding: 0.65rem 0.85rem;
+  cursor: pointer;
+}
+
+.buy-next-rank {
+  flex-shrink: 0;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buy-next-name {
+  flex: 1;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.buy-next-scores {
+  font-size: 0.75rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.buy-next-empty {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.all-items {
+  margin-top: 1.75rem;
+}
+
+.all-items h2 {
+  margin: 0 0 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
 .item-list {
   list-style: none;
-  margin: 1.25rem 0 0;
+  margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;

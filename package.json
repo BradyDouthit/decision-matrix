@@ -1,0 +1,13 @@
+{
+  "name": "decision-matrix",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cost vs. usefulness quadrant for prioritizing purchases",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Should We Buy It?</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>Should We Buy It?</h1>
+  </header>
+
+  <main>
+    <div class="quadrant-wrap">
+      <span class="axis-label axis-label--top">Cheap</span>
+      <span class="axis-label axis-label--bottom">Expensive</span>
+      <span class="axis-label axis-label--left">Not Useful &rarr; Very Useful</span>
+
+      <div id="quadrant" class="quadrant">
+        <div class="quadrant-quad quadrant-quad--tl"><span>Nice to Have</span></div>
+        <div class="quadrant-quad quadrant-quad--tr"><span>Buy Now</span></div>
+        <div class="quadrant-quad quadrant-quad--bl"><span>Skip</span></div>
+        <div class="quadrant-quad quadrant-quad--br"><span>Save Up</span></div>
+        <div class="quadrant-gridline quadrant-gridline--h"></div>
+        <div class="quadrant-gridline quadrant-gridline--v"></div>
+        <div id="dots" class="dots-layer"></div>
+      </div>
+    </div>
+
+    <ul id="item-list" class="item-list"></ul>
+  </main>
+
+  <button id="add-fab" class="fab" aria-label="Add item">+</button>
+
+  <div id="modal-overlay" class="modal-overlay hidden">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <h2 id="modal-title">Add Item</h2>
+      <form id="item-form">
+        <label class="field">
+          <span>Name</span>
+          <input type="text" id="field-name" required maxlength="80" placeholder="e.g. Stand mixer" />
+        </label>
+
+        <label class="field">
+          <span>Usefulness <output id="usefulness-out">5</output>/10</span>
+          <input type="range" id="field-usefulness" min="0" max="10" step="1" value="5" />
+        </label>
+
+        <label class="field">
+          <span>Cheapness <output id="cost-out">5</output>/10</span>
+          <input type="range" id="field-cost" min="0" max="10" step="1" value="5" />
+          <small>10 = very cheap, 0 = very expensive</small>
+        </label>
+
+        <label class="field">
+          <span>Notes (optional)</span>
+          <textarea id="field-notes" rows="2" maxlength="280"></textarea>
+        </label>
+
+        <div class="modal-actions">
+          <button type="button" id="delete-btn" class="btn btn--danger hidden">Delete</button>
+          <div class="modal-actions-right">
+            <button type="button" id="cancel-btn" class="btn btn--ghost">Cancel</button>
+            <button type="submit" class="btn btn--primary">Save</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

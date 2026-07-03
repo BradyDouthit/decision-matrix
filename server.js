@@ -1,7 +1,11 @@
 const express = require('express');
-const fs = require('fs/promises');
+const fs = require('fs').promises;
 const path = require('path');
-const crypto = require('crypto');
+
+function nextId(items) {
+  if (items.length === 0) return 1;
+  return Math.max(...items.map((i) => i.id)) + 1;
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -45,23 +49,24 @@ app.post('/api/items', async (req, res) => {
     return;
   }
 
+  const items = await readItems();
   const item = {
-    id: crypto.randomUUID(),
+    id: nextId(items),
     name: name.trim(),
     cost: clampScore(cost),
     usefulness: clampScore(usefulness),
     notes: typeof notes === 'string' ? notes.trim() : '',
   };
 
-  const items = await readItems();
   items.push(item);
   await writeItems(items);
   res.status(201).json(item);
 });
 
 app.patch('/api/items/:id', async (req, res) => {
+  const id = Number(req.params.id);
   const items = await readItems();
-  const item = items.find((i) => i.id === req.params.id);
+  const item = items.find((i) => i.id === id);
   if (!item) {
     res.status(404).json({ error: 'item not found' });
     return;
@@ -84,8 +89,9 @@ app.patch('/api/items/:id', async (req, res) => {
 });
 
 app.delete('/api/items/:id', async (req, res) => {
+  const id = Number(req.params.id);
   const items = await readItems();
-  const next = items.filter((i) => i.id !== req.params.id);
+  const next = items.filter((i) => i.id !== id);
   if (next.length === items.length) {
     res.status(404).json({ error: 'item not found' });
     return;
